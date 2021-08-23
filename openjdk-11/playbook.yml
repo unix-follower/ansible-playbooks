@@ -1,0 +1,9 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Install openjdk-11
+      shell: sudo apt-get install -y openjdk-11-jdk
