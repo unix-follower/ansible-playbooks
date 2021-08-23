@@ -1,0 +1,9 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Install VisualVM
+      shell: sudo apt-get install -y visualvm
