@@ -1,0 +1,11 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Update snap packages
+      shell: sudo snap refresh
+    - name: Install Postman
+      shell: sudo snap install postman
