@@ -1,0 +1,13 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update all packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Update snap packages
+      shell: sudo snap refresh
+    - name: Download kubectl
+      shell: snap install kubectl --classic
+    - name: Install kubectl bash completion
+      shell: kubectl completion bash > /etc/bash_completion.d/kubectl
