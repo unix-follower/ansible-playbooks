@@ -1,0 +1,15 @@
+- hosts: java-dev
+  become: true
+  tasks:
+    - name: Update packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Download SoapUI
+      shell: wget https://s3.amazonaws.com/downloads.eviware/soapuios/5.6.0/SoapUI-5.6.0-linux-bin.tar.gz /tmp
+    - name: Extract archive
+      shell: sudo tar xf /tmp/SoapUI-*.tar.gz -C /opt
+    - name: Move to installer directory
+      shell: cd /opt/SoapUI-*/bin/
+    - name: Run installer
+      shell: soapui.sh
