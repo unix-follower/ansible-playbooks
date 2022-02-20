@@ -1,0 +1,13 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Add repository key
+      shell: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    - name: Add repository to apt sources list
+      shell: sudo echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+    - name: Install Google Chrome
+      shell: sudo apt install -y google-chrome-stable
