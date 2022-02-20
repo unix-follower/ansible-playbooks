@@ -1,0 +1,9 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Install Apache Maven
+      shell: sudo apt install maven

@@ -1,0 +1,28 @@
+- hosts: all
+  become: true
+  vars:
+    version: 3.8.2
+  tasks:
+    - name: Update packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Download Apache Maven
+      # shell: wget https://www-us.apache.org/dist/maven/maven-3/{{version}}/binaries/apache-maven-{{version}}-bin.tar.gz -P /tmp
+      shell: wget https://apache.org/dist/maven/maven-3/{{version}}/binaries/apache-maven-{{version}}-bin.tar.gz -P /tmp
+    - name: Extract archive
+      shell: sudo tar xf /tmp/apache-maven-*.tar.gz -C /opt
+    - name: Create a symbolic link
+      shell: sudo ln -s /opt/apache-maven-3.6.3 /opt/maven
+    - name: Setup environment variable JAVA_HOME
+      shell: sudo echo "export JAVA_HOME=/usr/lib/jvm/default-java" > /etc/profile.d/maven.sh
+    - name: Setup environment variable M2_HOME
+      shell: sudo echo "export M2_HOME=/opt/maven" > /etc/profile.d/maven.sh
+    - name: Setup environment variable MAVEN_HOME
+      shell: sudo echo "export MAVEN_HOME=/opt/maven" > /etc/profile.d/maven.sh
+    - name: Setup environment variable PATH
+      shell: sudo echo "export PATH=${M2_HOME}/bin:${PATH}" > /etc/profile.d/maven.sh
+    - name: Make the script executable
+      shell: sudo chmod +x /etc/profile.d/maven.sh
+    # - name: Load the environment variables
+      # shell: sudo source /etc/profile.d/maven.sh
