@@ -1,0 +1,13 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update all packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Download kubectl
+      shell: curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+    - name: Move kubectl to /usr/local/bin/
+      shell: chmod +x kubectl && mv kubectl /usr/local/bin/
+    - name: Install kubectl bash completion
+      shell: kubectl completion bash > /etc/bash_completion.d/kubectl

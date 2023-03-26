@@ -1,0 +1,9 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Delete docker packages
+      shell: sudo apt-get purge -y docker-ce docker-ce-cli containerd.io
+    - name: Delete docker items
+      shell: sudo rm -rf /var/lib/docker
+    - name: Delete docker items
+      shell: sudo rm -rf /var/lib/containerd

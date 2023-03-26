@@ -1,0 +1,13 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update all packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Download minikube
+      shell: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
+    - name: Move minikube to /usr/local/bin/
+      shell: mv minikube /usr/local/bin/
+    - name: Install minikube bash completion
+      shell: minikube completion bash > /etc/bash_completion.d/minikube

@@ -1,0 +1,13 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update all packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Download get_helm.sh
+      shell: curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+    - name: Install Helm
+      shell: chmod 700 get_helm.sh && ./misc/get_helm.sh
+    - name: Install helm bash completion
+      shell: helm completion bash > /etc/bash_completion.d/helm

@@ -1,0 +1,13 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Update all packages
+      apt:
+        name: "*"
+        state: latest
+    - name: Update snap packages
+      shell: sudo snap refresh
+    - name: Install Helm
+      shell: snap install helm --classic
+    - name: Install helm bash completion
+      shell: helm completion bash > /etc/bash_completion.d/helm
